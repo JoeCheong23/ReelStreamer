@@ -1,3 +1,5 @@
+To launch this application, `run docker compose --env-file .env up`.
+
 To launch Claude Code, in claude-code-router, run
 `uv run uvicorn server:app --host 0.0.0.0 --port 8082 --reload`
 and in this repo, run
