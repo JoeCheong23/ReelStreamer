@@ -49,12 +49,42 @@
             fluid: true,
             autoplay: true,
             html5: {
-                vhs: {
-                    overrideNative: true // Better performance on Desktop Chrome
-                },
-                nativeAudioTracks: false,
-                nativeVideoTracks: false
-            }
+        vhs: {
+            overrideNative: true,
+            // --- THE LOW LATENCY TWEAKS ---
+            // Tell the player to start as close to the "live edge" as possible
+            bandwidth: 4000000, 
+            enableLowInitialPlaylist: true,
+            fastStart: true,
+            smoothQualityChange: true,
+            // This is the most important part for reducing lag:
+            goalBufferLength: 1,      // Only try to buffer 1 second
+            maxGoalBufferLength: 2,   // Never buffer more than 2 seconds
+            backBufferLength: 0       // Don't keep old video in memory
+        }
+    }
+        });
+
+        // "CATCH UP" LOGIC
+        // Every time the player is 2+ seconds behind the real live edge, 
+        // we jump it forward to keep latency tight.
+        player.on('loadedmetadata', function() {
+            setInterval(function() {
+                if (player.liveTracker && player.liveTracker.atLiveEdge()) {
+                    return; // We are already caught up
+                }
+                
+                const seekable = player.seekable();
+                if (seekable && seekable.length > 0) {
+                    const liveEdge = seekable.end(seekable.length - 1);
+                    const currentTime = player.currentTime();
+                    
+                    // If we are more than 2 seconds behind the edge, jump forward
+                    if (liveEdge - currentTime > 2) {
+                        player.currentTime(liveEdge - 0.5); // Jump to 0.5s from edge
+                    }
+                }
+            }, 2000); // Check every 2 seconds
         });
 
         // Event listener to check if the stream is actually live
