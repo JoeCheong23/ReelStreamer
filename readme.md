@@ -1,4 +1,4 @@
-To launch this application, `run docker compose --env-file .env --env-file .env-secret up`.
+To launch this application, `docker compose --env-file .env --env-file .env-secret up`.
 
 To launch Claude Code, in claude-code-router, run
 `uv run uvicorn server:app --host 0.0.0.0 --port 8082 --reload`
@@ -14,3 +14,12 @@ Implementation steps:
 * Test serving through Cloudflare tunnel
 * Test that stream is accessible through third device in browser over the internet
 * Test that stream is accessible in vrchat
+
+OBS settings (4 second latency approx.)
+stream.server = rtmp://localhost:1935/hls
+stream.streamKey = test
+output.rateControl = CBR
+output.bitrate = 3000 Kbps
+output.keyframe = 1 s
+output.cpu_usage_preset = ultrafast
+output.tune = zerolatency
