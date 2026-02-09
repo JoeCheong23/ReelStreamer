@@ -3,6 +3,7 @@ services:
   nginx:
     image: nginx-i
     container_name: ${NGINX_HOST}
+    profiles: ["hls"]
     build:
       context: nginx
       dockerfile: Dockerfile
@@ -21,6 +22,7 @@ services:
 
   tunnel:
     container_name: cloudflared-tunnel
+    profiles: ["hls"]
     image: cloudflare/cloudflared:latest
     restart: always
     environment:
@@ -28,3 +30,13 @@ services:
     command: tunnel --protocol http2 run
     depends_on:
       - nginx
+
+  rtsp-server:
+    image: bluenviron/mediamtx:1.16.1
+    container_name: rtsp-tcp-server
+    profiles: ["rtsp"]
+    ports:
+      - ${RTSP_PORT}:${RTSP_PORT} # RTSP Port
+      - ${RTMP_PORT}:${RTMP_PORT} # RTMP (if needed)
+      - ${HTTP_STANDARD_PORT}:${INTERNAL_HLS_PORT} # HLS
+    restart: always
