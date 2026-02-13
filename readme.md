@@ -1,6 +1,6 @@
 To launch this application, `docker compose --env-file .env --env-file .env-secret up`.
 
-To launch this application with the rtsp profile: `docker compose --env-file .env --env-file .env-secret --profile rtsp up`
+To launch this application with the rtsp profile: `docker compose --env-file .env --profile rtsp up`
 
 To launch Claude Code, in claude-code-router, run
 `uv run uvicorn server:app --host 0.0.0.0 --port 8082 --reload`
