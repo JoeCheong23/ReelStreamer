@@ -38,5 +38,5 @@ services:
     ports:
       - ${RTSP_PORT}:${RTSP_PORT} # RTSP Port
       - ${RTMP_PORT}:${RTMP_PORT} # RTMP (if needed)
-      - ${HTTP_STANDARD_PORT}:${INTERNAL_HLS_PORT} # HLS
+      # - ${HTTP_STANDARD_PORT}:${INTERNAL_HLS_PORT} # HLS
     restart: always
