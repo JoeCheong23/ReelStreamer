@@ -36,7 +36,7 @@ services:
     container_name: rtsp-tcp-server
     profiles: ["rtsp"]
     ports:
-      - ${RTSP_PORT}:${RTSP_PORT} # RTSP Port
+      - ${RTSP_PORT_IN}:${RTSP_PORT_OUT} # RTSP Port
       - ${RTMP_PORT}:${RTMP_PORT} # RTMP (if needed)
       # - ${HTTP_STANDARD_PORT}:${INTERNAL_HLS_PORT} # HLS
     restart: always
