@@ -1,5 +1,7 @@
 To launch this application, `docker compose --env-file .env --env-file .env-secret up`.
 
+To launch this application with the rtsp profile: `docker compose --env-file .env --profile rtsp up`
+
 To launch Claude Code, in claude-code-router, run
 `uv run uvicorn server:app --host 0.0.0.0 --port 8082 --reload`
 and in this repo, run
@@ -17,7 +19,7 @@ Implementation steps:
 
 OBS settings (4 second latency approx.)
 stream.server = rtmp://localhost:1935/hls
-stream.streamKey = test
+stream.streamKey = reel
 output.rateControl = CBR
 output.bitrate = 3000 Kbps
 output.keyframe = 1 s
